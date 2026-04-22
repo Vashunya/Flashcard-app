@@ -1,0 +1,199 @@
+{
+  "info": {
+    "_postman_id": "13be5111-0aad-451f-9794-2e420a4b94d4",
+    "name": "FlashLearn API (KBTU Project)",
+    "description": "Документация API для проекта FlashLearn (Django + Angular)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54233227",
+    "_collection_link": "https://go.postman.co/collection/54233227-13be5111-0aad-451f-9794-2e420a4b94d4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login (Get Token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"твой_логин_админа\",\n    \"password\": \"твой_пароль_админа\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/login/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "login",
+                ""
+              ]
+            },
+            "description": "Sends login and password, returns a token. This token must be copied and pasted into the collection variables (Variables tab) for the rest of the queries to work."
+          },
+          "response": []
+        }
+      ],
+      "description": "This folder contains authentication requests used to log in and obtain an access token for authorized API calls."
+    },
+    {
+      "name": "2. Decks (Колоды)",
+      "item": [
+        {
+          "name": "Get All Decks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/decks/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "decks",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create New Deck",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Моя первая колода\",\n    \"description\": \"Описание колоды\",\n    \"category\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/decks/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "decks",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Deck",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/decks/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "decks",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Deck",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/decks/1/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "decks",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "This folder includes requests for managing decks, including creating a new deck, retrieving all decks or a single deck, and deleting a deck."
+    },
+    {
+      "name": "3. User Stats",
+      "item": [
+        {
+          "name": "Get User Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/stats/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "stats",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "This folder contains requests for retrieving user statistics and tracking learning-related progress data."
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "token",
+      "value": "СЮДА_ВСТАВИТЬ_ТОКЕН"
+    }
+  ]
+}
