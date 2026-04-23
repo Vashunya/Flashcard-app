@@ -1,0 +1,56 @@
+<div class="page study-page">
+  @if (error()) { <div class="error-box">{{ error() }}</div> }
+
+  @if (deck() && cards().length > 0 && !done()) {
+    <div class="study-wrap">
+      <div class="study-top">
+        <span class="study-title">{{ deck()!.title }}</span>
+        <span class="study-counter">{{ idx() + 1 }} / {{ cards().length }}</span>
+      </div>
+
+      <div class="prog-bar"><div class="prog-fill" [style.width.%]="progress()"></div></div>
+
+      <div class="flashcard" (click)="!revealed() && reveal()">
+        @if (!revealed()) {
+          <div class="fc-side fc-front">
+            <span class="fc-badge">Question</span>
+            <p>{{ current().question }}</p>
+            <span class="fc-hint">tap to reveal</span>
+          </div>
+        } @else {
+          <div class="fc-side fc-back">
+            <span class="fc-badge ans">Answer</span>
+            <p>{{ current().answer }}</p>
+          </div>
+        }
+      </div>
+
+      @if (revealed()) {
+        <div class="ans-btns">
+          <button class="btn-wrong" (click)="answer(false)">✗ Wrong</button>
+          <button class="btn-right" (click)="answer(true)">✓ Correct</button>
+        </div>
+      }
+    </div>
+  }
+
+  @if (done()) {
+    <div class="result-wrap">
+      <div class="result-emoji">🎉</div>
+      <h2>Session Complete!</h2>
+      <div class="score-big">{{ correct() }} / {{ cards().length }}</div>
+      <div class="score-pct">{{ pct() }}% correct</div>
+      <div class="result-btns">
+        <button class="btn-primary" (click)="restart()">Study Again</button>
+        <button class="btn-ghost" (click)="router.navigate(['/decks', deck()!.id])">Back to Deck</button>
+      </div>
+    </div>
+  }
+
+  @if (deck() && cards().length === 0) {
+    <div class="empty">
+      <p>This deck has no cards yet.</p>
+      <button class="btn-primary" (click)="router.navigate(['/decks', deck()!.id])">Add Cards</button>
+    </div>
+  }
+</div>

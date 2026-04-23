@@ -1,0 +1,53 @@
+@if (deck()) {
+  <div class="page">
+    <div class="page-header">
+      <div>
+        <span class="tag">{{ deck()!.category_name }}</span>
+        <h1>{{ deck()!.title }}</h1>
+        @if (deck()!.description) { <p class="hero-sub">{{ deck()!.description }}</p> }
+      </div>
+      <div class="hdr-actions">
+        <a class="btn-primary" [routerLink]="['/decks', deck()!.id, 'study']">Study</a>
+        <a class="btn-outline" [routerLink]="['/decks', deck()!.id, 'edit']">Edit</a>
+        <a class="btn-ghost" routerLink="/decks">Back</a>
+      </div>
+    </div>
+
+    @if (error()) { <div class="error-box">{{ error() }}</div> }
+
+    <div class="section-header">
+      <h2>Cards ({{ deck()!.cards.length }})</h2>
+      <button class="btn-primary" (click)="showForm.set(!showForm())">
+        {{ showForm() ? 'Cancel' : '+ Add Card' }}
+      </button>
+    </div>
+
+    @if (showForm()) {
+      <div class="card-form">
+        <div class="form-group">
+          <label>Question</label>
+          <input type="text" [ngModel]="newCard().question" (ngModelChange)="newCard.set({...newCard(), question: $event})" placeholder="Enter question" class="input" />
+        </div>
+        <div class="form-group">
+          <label>Answer</label>
+          <input type="text" [ngModel]="newCard().answer" (ngModelChange)="newCard.set({...newCard(), answer: $event})" placeholder="Enter answer" class="input" />
+        </div>
+        <button class="btn-primary" (click)="addCard()">Save Card</button>
+      </div>
+    }
+
+    @if (deck()!.cards.length === 0) {
+      <div class="empty"><p>No cards yet. Add your first card above!</p></div>
+    }
+
+    <div class="cards-grid">
+      @for (card of deck()!.cards; track card.id) {
+        <div class="fc-item">
+          <button class="fc-del" (click)="deleteCard(card.id)">x</button>
+          <div class="fc-q"><b>Q</b> {{ card.question }}</div>
+          <div class="fc-a"><b>A</b> {{ card.answer }}</div>
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,38 @@
+<div class="page">
+  <div class="page-header">
+    <h1>My Decks</h1>
+    <a class="btn-primary" routerLink="/decks/new">+ New Deck</a>
+  </div>
+
+  <input type="text" [ngModel]="search()" (ngModelChange)="search.set($event); onSearch()"
+         placeholder="Search decks..." class="input search-input" />
+
+  @if (error()) { <div class="error-box">{{ error() }}</div> }
+
+  @if (loading()) {
+    <div class="empty"><p>Loading...</p></div>
+  }
+
+  @if (!loading() && filtered().length === 0) {
+    <div class="empty">
+      <p>No decks yet. <a routerLink="/decks/new">Create your first deck →</a></p>
+    </div>
+  }
+
+  <div class="deck-grid">
+    @for (deck of filtered(); track deck.id) {
+      <div class="deck-card">
+        <span class="tag">{{ deck.category_name }}</span>
+        <h3>{{ deck.title }}</h3>
+        <p class="deck-desc">{{ deck.description }}</p>
+        <span class="deck-count">{{ deck.cards.length }} cards</span>
+        <div class="deck-btns">
+          <a class="btn-sm btn-primary" [routerLink]="['/decks', deck.id, 'study']">Study</a>
+          <a class="btn-sm btn-outline" [routerLink]="['/decks', deck.id]">View</a>
+          <a class="btn-sm btn-ghost" [routerLink]="['/decks', deck.id, 'edit']">Edit</a>
+          <button class="btn-sm btn-danger" (click)="delete(deck.id, $event)">Delete</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
